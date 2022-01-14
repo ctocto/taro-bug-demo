@@ -14,7 +14,7 @@
 
 所以有了这个特性我们就不需要担心页面销毁后，组建还在。
 
-但是 Taro 有一种情况时`hide` 状态，比如一个页面`hide`之后 其实就是`display:none`，并没有销毁页面/组建，使用了`TabBar`的时候就是这样的情况。
+但是 Taro 有一种情况是`show/hide` 状态，比如一个页面`hide`之后 其实就是`display:none`，并没有销毁页面/组建，使用了`TabBar`的时候就是这样的情况。
 那 Tab1 跳转到 Tab2 之后，Tab1 里边使用了 `ReactDom.createPortal`的组建 还是在显示。
 
 这种情况我们需要 Taro 内置的消息机制监听页面组件的`onShow()`生命周期来控组建的显示。具体实现在`src/components/withPositionFixed.js`
