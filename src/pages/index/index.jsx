@@ -1,12 +1,16 @@
-import { useCallback } from "react";
-import { View, Text, Button, Image } from "@tarojs/components";
+import { useCallback, useState } from "react";
+import { View, Text, Button, Image, Navigator } from "@tarojs/components";
 import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
+import { useDidHide } from '@tarojs/taro';
+import HighButton from "../../components/HighButton";
+import SelectContact from "../../components/select-contact";
 import logo from "./hook.png";
 
 import './index.less'
 
 const Index = () => {
   const env = useEnv();
+  const [visibleSelectContact, setVisibleSelectContact] = useState(false);
   const [_, { setTitle }] = useNavigationBar({ title: "Taro Hooks" });
   const [show] = useModal({
     title: "Taro Hooks!",
@@ -23,10 +27,23 @@ const Index = () => {
     });
   }, [show, showToast]);
 
+  useDidHide(() => {
+    console.log('home page useDidHide')
+  })
+
+  const closeSelectContact = () => {
+    setVisibleSelectContact(false);
+  }
+
+  const selectContactCallback = (keys, options) => {
+    setVisibleSelectContact(false);
+  }
+
   return (
     <View className='wrapper'>
       <Image className='logo' src={logo} />
-      <Text className='title'>为Taro而设计的Hooks Library</Text>
+      <Text className='title'>Home</Text>
+      <Navigator url='pages/detail/detail' className='nav'>Go To Detail</Navigator>
       <Text className='desc'>
         目前覆盖70%官方API. 抹平部分API在H5端短板. 提供近40+Hooks!
         并结合ahook适配Taro!
@@ -85,7 +102,14 @@ const Index = () => {
       <Button className='button' onClick={handleModal}>
         使用Modal
       </Button>
-      <View className='btn-group'>+</View>
+      {/* <View className='btn-group'>+</View> */}
+      <HighButton onClick={() => setVisibleSelectContact(true)} />
+      <SelectContact
+        visible={visibleSelectContact}
+        onCancel={closeSelectContact}
+        onOk={selectContactCallback}
+        title='邀请成员'
+      />
     </View>
   );
 };

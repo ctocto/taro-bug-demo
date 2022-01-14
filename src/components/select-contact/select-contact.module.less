@@ -1,0 +1,99 @@
+// @import '../../common/theme.less';
+
+.selectContact {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  transform: translateY(110%);
+  transition: transform 0.2s ease;
+  visibility: hidden;
+  background-color: #fff;
+  font-size: 32px;
+}
+.show {
+  visibility: visible;
+  transform: translateY(0);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.04);
+}
+
+.close {
+  font-size: 48px;
+}
+
+.searchWrap {
+  margin: 20px;
+  border-radius: 8px;
+  background-color: rgb(240, 238, 238);
+}
+.searchInput {
+  padding: 20px;
+}
+
+
+.chooseListWrap {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 1001;
+  padding: 20px 24px 40px;
+  display: flex;
+  align-items: center;
+  background: #f7f6f6;
+  backdrop-filter: blur(10px);
+}
+.chooseList {
+  flex:1;
+  line-height: 0;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.avatar, .chooseItem {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+.ok {
+  width: 180px;
+  text-align: right;
+  // color: @default-color;
+}
+.avatar {
+  margin: 0 24px;
+}
+
+.CheckboxIcon {
+  width: 46px;
+  height: 46px;
+}
+.checkListCheckBox {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #ecebeb;
+  input {
+    top: 0;
+  }
+}
+
+.list {
+  padding-bottom: 50px;
+}
+.listItem {
+  padding: 20px;
+  line-height: 0;
+}
+
+.disabled {
+  background: #e4e3e3;
+  opacity: 0.6;
+}
