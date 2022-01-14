@@ -2,13 +2,17 @@ import { Component } from "react";
 import ReactDom from "react-dom";
 import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 
+const appRoot = document.getElementById('app');
+
 export default function withPositionFixed(WrappedComponent) {
   return class extends Component {
     // eslint-disable-next-line react/sort-comp
     $instance = getCurrentInstance()
 
-    state = {
-      visible: true,
+    constructor(props) {
+      super(props)
+      this.el = document.createElement('div');
+      this.el.className = 'with-position-fixed';
     }
 
     componentWillMount () {
@@ -19,6 +23,10 @@ export default function withPositionFixed(WrappedComponent) {
       eventCenter.on(onHideEventId, this.onHide);
     }
 
+    componentDidMount () {
+      appRoot.appendChild(this.el)
+    }
+
     componentWillUnmount() {
       this.setState = () => false; // https://blog.csdn.net/u012149969/article/details/105670055
       const onShowEventId = this.$instance.router.onShow
@@ -26,32 +34,26 @@ export default function withPositionFixed(WrappedComponent) {
       // 卸载
       eventCenter.off(onShowEventId, this.onShow)
       eventCenter.off(onHideEventId, this.onHide)
+      appRoot.removeChild(this.el)
     }
 
     onShow = () => {
       console.log('from page onShow')
-      this.setState({
-        visible: true,
-      })
+
+      this.el.style.display = '';
     }
 
     onHide = () => {
       console.log('from page onHide')
-      this.setState({
-        visible: false,
-      })
+
+      this.el.style.display = 'none';
     }
 
     render() {
-      const { visible } = this.state;
-
-      if (visible) {
-        return ReactDom.createPortal(
-          <WrappedComponent {...this.props} />,
-          document.getElementById('app')
-        )
-      }
-      return null;
+      return ReactDom.createPortal(
+        <WrappedComponent {...this.props} />,
+        this.el
+      )
     }
   }
 }
