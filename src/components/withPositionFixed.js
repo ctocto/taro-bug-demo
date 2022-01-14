@@ -1,11 +1,11 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import ReactDom from "react-dom";
 import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 
 const appRoot = document.getElementById('app');
 
 export default function withPositionFixed(WrappedComponent) {
-  return class extends Component {
+  class Wrapper extends Component {
     // eslint-disable-next-line react/sort-comp
     $instance = getCurrentInstance()
 
@@ -50,10 +50,15 @@ export default function withPositionFixed(WrappedComponent) {
     }
 
     render() {
+      const { forwardedRef, ...rest } = this.props;
       return ReactDom.createPortal(
-        <WrappedComponent {...this.props} />,
+        <WrappedComponent ref={forwardedRef} {...rest} />,
         this.el
       )
     }
   }
+
+  return React.forwardRef((props, ref) => {
+    return <Wrapper {...props} forwardedRef={ref} />;
+  });
 }

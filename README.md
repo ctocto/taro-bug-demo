@@ -18,3 +18,5 @@
 那 Tab1 跳转到 Tab2 之后，Tab1 里边使用了 `ReactDom.createPortal`的组建 还是在显示。
 
 这种情况我们需要 Taro 内置的消息机制监听页面组件的`onShow()`生命周期来控组建的显示。具体实现在`src/components/withPositionFixed.js`
+
+方便使用把它封装成一个高阶组建，在需要`position：fixed`的组建包裹一下就好了：`withPositionFixed(HighButton)`
